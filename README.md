@@ -1,3 +1,3 @@
-# sails-proj
+# Maggie's Math Games
 
-a [Sails](http://sailsjs.org) application
+Fun math games for Maggie!
