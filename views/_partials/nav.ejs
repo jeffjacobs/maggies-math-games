@@ -7,11 +7,20 @@
 			<% } %>
 		</h1>
 	</div>
-	<div class="menu">
-		<% if(typeof ShowMenu == 'undefined' || ShowMenu) { %>
-			<span>here's the menu</span>
-		<% } else {	%>
-			<span>no menu :(</span>
-		<% } %>
-	</div>
+	<% if(typeof ShowMenu == 'undefined' || ShowMenu) { %>
+		<div class="menu">
+			<div class="hamburger hamburger--spin">
+				<div class="hamburger-box">
+					<div class="hamburger-inner"></div>
+				</div>
+			</div>
+		</div>
+	<% } %>
 </header>
+
+<script>
+	var hamburger = document.querySelector(".hamburger");
+	hamburger.addEventListener("click", function() {
+		hamburger.classList.toggle("is-active");
+	});
+</script>

@@ -1,0 +1,9 @@
+#question {
+	text-align: center;
+	span {
+		margin: 0 $spacing-xs;
+		display: inline-block;
+		font-size: $font-size-jumbo;
+		font-weight: $font-weight-bold;
+	}
+}

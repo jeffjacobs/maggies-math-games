@@ -40,8 +40,18 @@ header {
 		justify-content: center;
 		height: 100%;
 	}
+	#intro {
+	}
+	#game-wrapper {
+		display: none;
+	}
 }
 
 footer {
 	padding: $spacing-lg $spacing;
+	text-align: center;
+	.game-progress, .game-timer {
+		display: inline-block;
+		margin: 0 $spacing-xs;
+	}
 }
