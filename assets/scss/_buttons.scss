@@ -1,0 +1,17 @@
+.btn {
+	font-family: inherit;
+	font-weight: $font-weight-bold;
+	padding: $spacing-sm $spacing-lg;
+	margin: $spacing-xs $spacing-sm;
+	text-transform: uppercase;
+	color: $pink;
+	background-color: transparent;
+	border: 2px solid $pink;
+	border-radius: 3px;
+	transition: .3s ease all;
+	&:hover {
+		color: darken($pink, .2);
+		border-color: darken($pink, .2);
+		background-color: rgba($pink, .03);
+	}
+}

@@ -1,0 +1,18 @@
+header {
+	color: $pink;
+	h1 {
+		font-size: $font-size-lg;
+		font-weight: $font-weight-light;
+		margin-right: $spacing-sm;
+		small {
+			text-transform: uppercase;
+			font-size: $font-size-default;
+			font-weight: $font-weight-bold;
+			&:before {
+				display: inline-block;
+				content: "|";
+				margin-right: $spacing-sm;
+			}
+		}
+	}
+}
