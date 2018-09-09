@@ -9,9 +9,13 @@
 	border: 2px solid $pink;
 	border-radius: 3px;
 	transition: .3s ease all;
-	&:hover {
+	&:hover, &:active {
 		color: darken($pink, .2);
 		border-color: darken($pink, .2);
 		background-color: rgba($pink, .03);
+	}
+	&:active, &:focus {
+		outline: none;
+		box-shadow: none;
 	}
 }

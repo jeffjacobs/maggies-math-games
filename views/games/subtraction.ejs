@@ -1,5 +1,9 @@
 <%- partial ('../_partials/nav.ejs', { GameName: "Subtraction"}) %>
 
+<script>
+	var pageOperand = '-';
+</script>
+
 <div id="main-wrapper">
 	<div class="container">
 		<div id="intro">
@@ -27,6 +31,11 @@
 						<span>=</span>
 						<span class="answer"></span>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<a href="#" class="btn btn-primary" id="submitAnswer">Next</a>
 				</div>
 			</div>
 		</div>

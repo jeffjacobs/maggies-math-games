@@ -1,25 +1,29 @@
 var maxInt = 10; // the highest number to be used in the equations
-var maxQuestions = 20; // the maximum number of questions for any game;
+var maxQuestions = 4; // the maximum number of questions for any game;
 var maxTimer = 120; // timer length for the timed test: 120 seconds/2 minutes;
+var animationSpeed = 350;
 var questions = new Array; // array to hold the arguments, operands answers and whether the question was answer correctly
 
 var j = 0; // current position answering questions
 
 function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    var loop = setInterval(function () {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10);
+	display.html(formatTime(duration));
+	var loop = setInterval(function () {
+		display.html(formatTime(duration));
+		if (--duration < 0) {
+			clearInterval(loop);
+		}
+	}, 1000);
+}
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+function formatTime(d) {
+	var m = parseInt(d / 60, 10);
+	var s = parseInt(d % 60, 10);
+	return twoDigits(m) + ':' + twoDigits(s);
+}
 
-        display.html(minutes + ":" + seconds);
-
-        if (--timer < 0) {
-           clearInterval(loop);
-        }
-    }, 1000);
+function twoDigits(d) {
+	return d < 10 ? "0" + d : d;
 }
 
 function getRandomInt(max) {
@@ -35,6 +39,16 @@ function setQuestions(j, o){
 			operand: o,
 			isCorrect :null
 		};
+
+		// make sure the digits aren't the same as the last group
+		if(i > 1){
+			while((questions[i].num1 == questions[i-1].num1 && questions[i].num2 == questions[i-1].num2) || (questions[i].num1 == questions[i-1].num2 && questions[i].num2 == questions[i-1].num1)) { // digits are flipped)
+				questions[i].num1 = getRandomInt(maxInt);
+				questions[i].num2 = getRandomInt(maxInt);
+			}
+		}
+
+		// make sure the answer isn't negative
 		if(o == '-' && questions[i].num1 < questions[i].num2) {
 			var temp = questions[i].num2;
 			questions[i].num2 = questions[i].num1;
@@ -58,30 +72,59 @@ function setQuestions(j, o){
 }
 
 function answerQuestion() {
+	if(pageOperand == '?'){
+	}
+	else {
+		if($('#typed-answer').val() == questions[j].answer){
+			questions[j].isCorrect = true;
+		}
+		else {
+			questions[j].isCorrect = false;
+		}
+	}
+	if(j < maxQuestions - 1) {
+		j++;
+	}
+	$('#game-wrapper').fadeOut(animationSpeed, function(){
+		advanceQuestion();
+		$('#game-wrapper').fadeIn(animationSpeed);
+	});
 }
 
 function advanceQuestion(){
-	$('footer .game-progress .count').html(j + 1);
+	setProgress();
 	$('#game-wrapper #question .n1').html(questions[j].num1);
 	$('#game-wrapper #question .operand').html(questions[j].operand);
 	$('#game-wrapper #question .n2').html(questions[j].num2);
 	$('#game-wrapper #question .answer').html(questions[j].answer);
-	if(j < maxQuestions - 1) {
-		j++;
-	}
+}
+
+function setProgress() {
+	$('footer .game-progress .count').html(j + 1);
+	$('footer .game-progress .modifier').html('of');
+	$('footer .game-progress .total').html(maxQuestions);
+}
+
+function showResults(){
+
 }
 
 $(document).ready(function(){
+	// start the game
 	$('#begin').on('click', function(e){
-		setQuestions(maxQuestions, '-');
-		$('#intro').fadeOut(350, function(){
-			$('#game-wrapper').fadeIn(350, function(){
-				advanceQuestion();
-			});
+		setQuestions(maxQuestions, pageOperand);
+		$('#intro').fadeOut(animationSpeed, function(){
+			advanceQuestion(); // set the first question
+			var timer = $("footer .game-timer"); // set the timer target
+			startTimer(maxTimer, timer); // start the timer
+			$('#game-wrapper').fadeIn(animationSpeed); // fade in the questions
 		});
 		e.preventDefault();
-	})
-	var timer = $("footer .game-timer");
-	startTimer(maxTimer, timer)
+	});
+	// go to the next question
+	$('#submitAnswer').on('click', function(e){
+		answerQuestion();
+		e.preventDefault();
+	});
 });
 
